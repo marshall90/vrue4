@@ -51,7 +51,7 @@ public class ExclusiveAccessObjectController : NetworkObjectController
 	 *	have to implement these semantics yourself in the code below).
 	 ----------------------------------------------------------------- */
 
-
+	NetworkPlayer currentSelector = defaultAccessPlayer; 
 
 	// ------------------ VRUE Tasks END ----------------------------
 
@@ -75,17 +75,19 @@ public class ExclusiveAccessObjectController : NetworkObjectController
                  *	the default NetworkPlayer depending on "select"
                 ----------------------------------------------------------------- */
 
-return true;//replace me
-
-
-
-
-
-
-
-
-
-
+				if (select) {
+					if (currentSelector != info.sender) {
+						currentSelector = info.sender;
+						return true;
+					}
+					else return false; 
+				}
+				else {
+					//if (currentSelector != defaultAccessPlayer){
+					currentSelector = defaultAccessPlayer;
+					return false;
+					//}
+				}
 
                 // ------------------ VRUE Tasks END ----------------------------
 				
@@ -105,14 +107,7 @@ return true;//replace me
          * 	- return true if the player is the one that has currently selected the object
         ----------------------------------------------------------------- */
 
-return false; //replace me
-
-
-
-
-
-
-
+		return (player == currentSelector); 
 
 
 		// ------------------ VRUE Tasks END ----------------------------
@@ -132,7 +127,7 @@ return false; //replace me
 			 * the object or the object is not selected.
 			----------------------------------------------------------------- */
 
-return true; //replace me
+			return (isAccessingObject(player) || currentSelector == defaultAccessPlayer); //replace me
 
 
 
@@ -160,7 +155,7 @@ return true; //replace me
 			 * 	object to an unselected state.
 			 ----------------------------------------------------------------- */
 
-
+			currentSelector = defaultAccessPlayer;
 
 			// ------------------ VRUE Tasks END ----------------------------
             
