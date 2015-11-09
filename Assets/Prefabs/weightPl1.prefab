@@ -13,7 +13,7 @@ GameObject:
   - 65: {fileID: 6500000}
   - 54: {fileID: 5400000}
   - 148: {fileID: 14800000}
-  - 114: {fileID: 11400000}
+  - 114: {fileID: 11461718}
   m_Layer: 0
   m_Name: weightPl1
   m_TagString: Untagged
@@ -109,7 +109,10 @@ BoxCollider:
 --- !u!1002 &6500001
 EditorExtensionImpl:
   serializedVersion: 6
---- !u!114 &11400000
+--- !u!1002 &11400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!114 &11461718
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -117,12 +120,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e96bfc9bab77fe4195f6ea2fb33c4f0, type: 3}
+  m_Script: {fileID: 11500000, guid: c6e1b976988fba64699533d3768da49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1002 &11400001
-EditorExtensionImpl:
-  serializedVersion: 6
 --- !u!148 &14800000
 NetworkView:
   m_ObjectHideFlags: 1
@@ -132,7 +132,7 @@ NetworkView:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 11400000}
+  m_Observed: {fileID: 11461718}
   m_ViewID:
     m_ID: 0
     m_Type: 0

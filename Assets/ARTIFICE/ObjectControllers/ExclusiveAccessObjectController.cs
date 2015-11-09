@@ -50,7 +50,7 @@ public class ExclusiveAccessObjectController : NetworkObjectController
 	 *	- If the defaultAccessPlayer is assigned, no player has currently selected the object(You 
 	 *	have to implement these semantics yourself in the code below).
 	 ----------------------------------------------------------------- */
-
+	private NetworkPlayer currentAccessPlayer = defaultAccessPlayer;
 
 
 	// ------------------ VRUE Tasks END ----------------------------
@@ -75,17 +75,19 @@ public class ExclusiveAccessObjectController : NetworkObjectController
                  *	the default NetworkPlayer depending on "select"
                 ----------------------------------------------------------------- */
 
-return true;//replace me
+//return true;//replace me
+
+				if(select)
+				{
+					currentAccessPlayer = viewID.owner;
+				}
+				else
+				{
+					currentAccessPlayer = defaultAccessPlayer;
+				}
 
 
-
-
-
-
-
-
-
-
+				return true;
 
                 // ------------------ VRUE Tasks END ----------------------------
 				
@@ -105,11 +107,14 @@ return true;//replace me
          * 	- return true if the player is the one that has currently selected the object
         ----------------------------------------------------------------- */
 
-return false; //replace me
+//return false; //replace me
 
+		if(player == currentAccessPlayer)
+		{
+			return true;
+		}
 
-
-
+		return false;
 
 
 
@@ -132,8 +137,12 @@ return false; //replace me
 			 * the object or the object is not selected.
 			----------------------------------------------------------------- */
 
-return true; //replace me
+//return true; //replace me
 
+			if(player == currentAccessPlayer || currentAccessPlayer == defaultAccessPlayer)
+			{
+				return true;
+			}
 
 
 
@@ -159,7 +168,7 @@ return true; //replace me
 			 * 	- Once the client disconnects you have to bring the
 			 * 	object to an unselected state.
 			 ----------------------------------------------------------------- */
-
+			currentAccessPlayer = defaultAccessPlayer;
 
 
 			// ------------------ VRUE Tasks END ----------------------------
