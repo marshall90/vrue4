@@ -33,70 +33,50 @@ using System.Collections;
 /// </summary>
 public class ExclusiveAccessObjectController : NetworkObjectController
 {
-    /// <summary>
-    /// The default client used if the object is not accessed.
-    /// </summary>
-    /// 
-    protected static NetworkPlayer defaultAccessPlayer = new NetworkPlayer();
-
-    /// <summary>
-    /// The client currently "accessing" the object.
-    /// </summary>
-    /// 
-    
+	/// <summary>
+	/// The default client used if the object is not accessed.
+	/// </summary>
+	/// 
+	protected static NetworkPlayer defaultAccessPlayer = new NetworkPlayer();
+	
+	/// <summary>
+	/// The client currently "accessing" the object.
+	/// </summary>
+	/// 
+	
 	/* ------------------ VRUE Tasks START   -------------------
 	 *	- Add a NetworkPlayer member to store the player that has the object currently selected
 	 *	- The static member above should be used for initialization for the new member. 
 	 *	- If the defaultAccessPlayer is assigned, no player has currently selected the object(You 
 	 *	have to implement these semantics yourself in the code below).
 	 ----------------------------------------------------------------- */
-<<<<<<< HEAD
-
-	NetworkPlayer currentSelector = defaultAccessPlayer; 
-=======
 	private NetworkPlayer currentAccessPlayer = defaultAccessPlayer;
-
->>>>>>> origin/master
-
+	
+	
 	// ------------------ VRUE Tasks END ----------------------------
-
-    /// <summary>
-    /// RPC-method that turns on/off selection of the controlled object. 
-    /// Also sets the parameters required for certain components.
-    /// e.g. Physics. Overrides the one from NetworkObjec Controller
-    /// </summary>
-    /// <param name="select">true for select, false for unselect</param>
-    /// <param name="info">Info about the caller-client</param>
-    /// <returns>true if object not already selected, false otherwise</returns>
-    [RPC]
-    public override bool controlSelectedObjects(bool select, NetworkViewID viewID, NetworkMessageInfo info)
-    {
-        if (isObjectAccessGranted(info.sender))
-        {
-            if (base.controlSelectedObjects(select,viewID,info))
-            {
+	
+	/// <summary>
+	/// RPC-method that turns on/off selection of the controlled object. 
+	/// Also sets the parameters required for certain components.
+	/// e.g. Physics. Overrides the one from NetworkObjec Controller
+	/// </summary>
+	/// <param name="select">true for select, false for unselect</param>
+	/// <param name="info">Info about the caller-client</param>
+	/// <returns>true if object not already selected, false otherwise</returns>
+	[RPC]
+	public override bool controlSelectedObjects(bool select, NetworkViewID viewID, NetworkMessageInfo info)
+	{
+		if (isObjectAccessGranted(info.sender))
+		{
+			if (base.controlSelectedObjects(select,viewID,info))
+			{
 				/* ------------------ VRUE Tasks START   -------------------
 				 *	- set the current NetworkPlayer to the player calling the RPC-method or 
                  *	the default NetworkPlayer depending on "select"
                 ----------------------------------------------------------------- */
-
-<<<<<<< HEAD
-				if (select) {
-					if (currentSelector != info.sender) {
-						currentSelector = info.sender;
-						return true;
-					}
-					else return false; 
-				}
-				else {
-					//if (currentSelector != defaultAccessPlayer){
-					currentSelector = defaultAccessPlayer;
-					return false;
-					//}
-				}
-=======
-//return true;//replace me
-
+				
+				//return true;//replace me
+				
 				if(select)
 				{
 					currentAccessPlayer = viewID.owner;
@@ -105,113 +85,99 @@ public class ExclusiveAccessObjectController : NetworkObjectController
 				{
 					currentAccessPlayer = defaultAccessPlayer;
 				}
-
-
-				return true;
->>>>>>> origin/master
-
-                // ------------------ VRUE Tasks END ----------------------------
 				
-            }
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Checks if the player is currently the exclusive access user of the object.
-    /// </summary>
-    /// <param name="player">Player</param>
-    /// <returns>True if the player accesses the object, false otherwise.</returns>
-    protected bool isAccessingObject(NetworkPlayer player)
-    {
-        /* ------------------ VRUE Tasks START   -------------------
+				
+				return true;
+				
+				// ------------------ VRUE Tasks END ----------------------------
+				
+			}
+		}
+		return false;
+	}
+	
+	/// <summary>
+	/// Checks if the player is currently the exclusive access user of the object.
+	/// </summary>
+	/// <param name="player">Player</param>
+	/// <returns>True if the player accesses the object, false otherwise.</returns>
+	protected bool isAccessingObject(NetworkPlayer player)
+	{
+		/* ------------------ VRUE Tasks START   -------------------
          * 	- return true if the player is the one that has currently selected the object
         ----------------------------------------------------------------- */
-
-<<<<<<< HEAD
-		return (player == currentSelector); 
-=======
-//return false; //replace me
-
+		
+		//return false; //replace me
+		
 		if(player == currentAccessPlayer)
 		{
 			return true;
 		}
-
+		
 		return false;
-
-
-
->>>>>>> origin/master
-
-
+		
+		
+		
+		
+		
 		// ------------------ VRUE Tasks END ----------------------------
-    }
-
-    /// <summary>
-    /// Checks whether the NetworkPlayer is granted access to the object.
-    /// </summary>
-    /// <param name="player">NetworkPlayer</param>
-    /// <returns>true if it is the access granted, false otherwise</returns>
-    protected override bool isObjectAccessGranted(NetworkPlayer player)
-    {
-        if(base.isObjectAccessGranted(player))
-        {
+	}
+	
+	/// <summary>
+	/// Checks whether the NetworkPlayer is granted access to the object.
+	/// </summary>
+	/// <param name="player">NetworkPlayer</param>
+	/// <returns>true if it is the access granted, false otherwise</returns>
+	protected override bool isObjectAccessGranted(NetworkPlayer player)
+	{
+		if(base.isObjectAccessGranted(player))
+		{
 			/* ------------------ VRUE Tasks START   -------------------
 			 * 	- return true if the player is the one that has currently selected
 			 * the object or the object is not selected.
 			----------------------------------------------------------------- */
-
-<<<<<<< HEAD
-			return (isAccessingObject(player) || currentSelector == defaultAccessPlayer); //replace me
-=======
-//return true; //replace me
->>>>>>> origin/master
-
+			
+			//return true; //replace me
+			
 			if(player == currentAccessPlayer || currentAccessPlayer == defaultAccessPlayer)
 			{
 				return true;
 			}
-
-
-
-
-            // ------------------ VRUE Tasks END ----------------------------
-        }
-        else
-        {
-            return false;
-        }
-        return false;
-        
-    }
-    /// <summary>
-    /// If object is selected by Player disconnecting then we have to unselect.
-    /// </summary>
-    /// <param name="player">Player that disconnected</param>
-    protected virtual void OnPlayerDisconnected(NetworkPlayer player)
-    {
-        if (isAccessingObject(player))
-        {
+			
+			
+			
+			
+			// ------------------ VRUE Tasks END ----------------------------
+		}
+		else
+		{
+			return false;
+		}
+		return false;
+		
+	}
+	/// <summary>
+	/// If object is selected by Player disconnecting then we have to unselect.
+	/// </summary>
+	/// <param name="player">Player that disconnected</param>
+	protected virtual void OnPlayerDisconnected(NetworkPlayer player)
+	{
+		if (isAccessingObject(player))
+		{
 			/* ------------------ VRUE Tasks START   -------------------
 			 * 	- Once the client disconnects you have to bring the
 			 * 	object to an unselected state.
 			 ----------------------------------------------------------------- */
-<<<<<<< HEAD
-
-			currentSelector = defaultAccessPlayer;
-=======
 			currentAccessPlayer = defaultAccessPlayer;
-
->>>>>>> origin/master
-
+			
+			
 			// ------------------ VRUE Tasks END ----------------------------
-            
-            //unselect
-            NetworkMessageInfo info= new NetworkMessageInfo();
-            base.controlSelectedObjects(false, this.networkView.viewID, info);
-        }
-    }
-
-
+			
+			//unselect
+			NetworkMessageInfo info= new NetworkMessageInfo();
+			base.controlSelectedObjects(false, this.networkView.viewID, info);
+		}
+	}
+	
+	
 }
