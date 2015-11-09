@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE OpenTracker SYSTEM "opentracker.dtd">
+<OpenTracker>
+  <configuration>
+    <ConsoleConfig display="off"/>
+    <ARToolKitPlusConfig camera-parameter="camera-calibration.cal" undist-mode="lut" marker-mode="bch" border-width="0.125" treshold="auto" pose-estimator="rpp" ovSink="video"/>
+   <SpaceDeviceConfig />
+  </configuration>
+  
+	<!--Write tracking data to console output-->
+	<ConsoleSink comment="Tracking input Marker0" active="on">
+		<!-- Unity sink to handle tracking data from marker0 -->
+		<UnitySink name="Marker0">
+			<!-- Rotate coordinate system 180 deg -->
+			<EventTransform scale="1 1 1" rotationtype="euler" rotation="0 0 3.14159" translation="0 0 0">
+				<!-- This source receives data from ARToolKit Plus -->
+				<ARToolKitPlusSingleMarkerSource center="0 0" size="0.08 0.08" tag-id="0"/>
+			</EventTransform>	  	
+		</UnitySink>
+	</ConsoleSink>	  
+	
+		<!--Write tracking data to console output-->
+	<ConsoleSink comment="Tracking input Marker1" active="on">
+		<!-- Unity sink to handle tracking data from marker0 -->
+		<UnitySink name="Marker1">
+			<!-- Rotate coordinate system 180 deg -->
+			<EventTransform scale="1 1 1" rotationtype="euler" rotation="0 0 3.14159" translation="0 0 0">
+				<!-- This source receives data from ARToolKit Plus -->
+				<ARToolKitPlusSingleMarkerSource center="0 0" size="0.08 0.08" tag-id="1"/>
+			</EventTransform>	  	
+		</UnitySink>
+	</ConsoleSink>	
+	
+	
+	
+	<ConsoleSink comment="Tracking input Marker2" active="on">
+		<!-- Unity sink to handle tracking data from marker0 -->
+		<UnitySink name="Marker2">
+			<!-- Rotate coordinate system 180 deg -->
+			<EventTransform scale="1 1 1" rotationtype="euler" rotation="0 0 3.14159" translation="0 0 0">
+				<!-- This source receives data from ARToolKit Plus -->
+				<ARToolKitPlusSingleMarkerSource center="0 0" size="0.08 0.08" tag-id="2"/>
+			</EventTransform>  
+		</UnitySink>
+	</ConsoleSink>
+	
+		<ConsoleSink comment="Tracking input Marker3" active="on">
+		<!-- Unity sink to handle tracking data from marker0 -->
+		<UnitySink name="Marker3">
+			<!-- Rotate coordinate system 180 deg -->
+			<EventTransform scale="1 1 1" rotationtype="euler" rotation="0 0 3.14159" translation="0 0 0">
+				<!-- This source receives data from ARToolKit Plus -->
+				<ARToolKitPlusSingleMarkerSource center="0 0" size="0.08 0.08" tag-id="3"/>
+			</EventTransform>  
+		</UnitySink>
+	</ConsoleSink>
+	
+		<ConsoleSink comment="Tracking input Marker4" active="on">
+		<!-- Unity sink to handle tracking data from marker0 -->
+		<UnitySink name="Marker4">
+			<!-- Rotate coordinate system 180 deg -->
+			<EventTransform scale="1 1 1" rotationtype="euler" rotation="0 0 3.14159" translation="0 0 0">
+				<!-- This source receives data from ARToolKit Plus -->
+				<ARToolKitPlusSingleMarkerSource center="0 0" size="0.08 0.08" tag-id="4"/>
+			</EventTransform>  
+		</UnitySink>
+	</ConsoleSink>
+	
+		<ConsoleSink comment="Tracking input Marker5" active="on">
+		<!-- Unity sink to handle tracking data from marker0 -->
+		<UnitySink name="Marker5">
+			<!-- Rotate coordinate system 180 deg -->
+			<EventTransform scale="1 1 1" rotationtype="euler" rotation="0 0 3.14159" translation="0 0 0">
+				<!-- This source receives data from ARToolKit Plus -->
+				<ARToolKitPlusSingleMarkerSource center="0 0" size="0.08 0.08" tag-id="5"/>
+			</EventTransform>  
+		</UnitySink>
+	</ConsoleSink>
+	
+	
+	<ConsoleSink comment="Spacenavigator console" active="on">
+		<UnitySink name="SpaceMouse">
+			<!-- 1st person view, rotate by 180° around y-axis -->
+			<EventTransform scale="0.01 0.01 0.01" rotationtype="euler" rotation="1.57 0 0" translation="0 0 0">
+			<!-- 3rd person view -->
+			<!--<EventTransform scale="-0.01 -0.01 -0.01" rotationtype="euler" rotation="1.57 0 3.14159" translation="0 0 0">-->
+				<SpaceDeviceSource />
+			</EventTransform>
+		</UnitySink>
+	</ConsoleSink>
+
+</OpenTracker>
