@@ -50,8 +50,13 @@ public class ExclusiveAccessObjectController : NetworkObjectController
 	 *	- If the defaultAccessPlayer is assigned, no player has currently selected the object(You 
 	 *	have to implement these semantics yourself in the code below).
 	 ----------------------------------------------------------------- */
+<<<<<<< HEAD
 
 	NetworkPlayer currentSelector = defaultAccessPlayer; 
+=======
+	private NetworkPlayer currentAccessPlayer = defaultAccessPlayer;
+
+>>>>>>> origin/master
 
 	// ------------------ VRUE Tasks END ----------------------------
 
@@ -75,6 +80,7 @@ public class ExclusiveAccessObjectController : NetworkObjectController
                  *	the default NetworkPlayer depending on "select"
                 ----------------------------------------------------------------- */
 
+<<<<<<< HEAD
 				if (select) {
 					if (currentSelector != info.sender) {
 						currentSelector = info.sender;
@@ -88,6 +94,21 @@ public class ExclusiveAccessObjectController : NetworkObjectController
 					return false;
 					//}
 				}
+=======
+//return true;//replace me
+
+				if(select)
+				{
+					currentAccessPlayer = viewID.owner;
+				}
+				else
+				{
+					currentAccessPlayer = defaultAccessPlayer;
+				}
+
+
+				return true;
+>>>>>>> origin/master
 
                 // ------------------ VRUE Tasks END ----------------------------
 				
@@ -107,7 +128,21 @@ public class ExclusiveAccessObjectController : NetworkObjectController
          * 	- return true if the player is the one that has currently selected the object
         ----------------------------------------------------------------- */
 
+<<<<<<< HEAD
 		return (player == currentSelector); 
+=======
+//return false; //replace me
+
+		if(player == currentAccessPlayer)
+		{
+			return true;
+		}
+
+		return false;
+
+
+
+>>>>>>> origin/master
 
 
 		// ------------------ VRUE Tasks END ----------------------------
@@ -127,8 +162,16 @@ public class ExclusiveAccessObjectController : NetworkObjectController
 			 * the object or the object is not selected.
 			----------------------------------------------------------------- */
 
+<<<<<<< HEAD
 			return (isAccessingObject(player) || currentSelector == defaultAccessPlayer); //replace me
+=======
+//return true; //replace me
+>>>>>>> origin/master
 
+			if(player == currentAccessPlayer || currentAccessPlayer == defaultAccessPlayer)
+			{
+				return true;
+			}
 
 
 
@@ -154,8 +197,13 @@ public class ExclusiveAccessObjectController : NetworkObjectController
 			 * 	- Once the client disconnects you have to bring the
 			 * 	object to an unselected state.
 			 ----------------------------------------------------------------- */
+<<<<<<< HEAD
 
 			currentSelector = defaultAccessPlayer;
+=======
+			currentAccessPlayer = defaultAccessPlayer;
+
+>>>>>>> origin/master
 
 			// ------------------ VRUE Tasks END ----------------------------
             
