@@ -106,7 +106,7 @@ public class NetworkGUI : MonoBehaviour {
 	 			*	- add label for player name
     			----------------------------------------------------------------- */
 
-
+				GUILayout.Label("Player name: " + playerName);
 
 
 				// ------------------ VRUE Tasks END ----------------------------
