@@ -51,14 +51,9 @@ public class UserManagementObjectController : ExclusiveAccessObjectController
 			/* ------------------ VRUE Tasks START  -------------------
 			 * 	- find out if the NetworkPlayer is the owner of the object
 			----------------------------------------------------------------- */
-return false; //replace me
-
-
-
-
-
-
-
+			accessGrantedPlayer = UserManager.instance.getNetworkPlayer(accessGrantedName);
+			if (player.Equals(accessGrantedPlayer)) return true;
+			else return false;
 
             // ------------------ VRUE Tasks END ----------------------------
         }

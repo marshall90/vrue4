@@ -26,7 +26,8 @@
 
 using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
+using System.Linq;
 public class UserManager : ScriptableObject {
 
     static readonly object padlock = new object();
@@ -42,16 +43,18 @@ public class UserManager : ScriptableObject {
 	 * 	- Add a data-structure, that can help you map the NetworkPlayers to name-strings
     ----------------------------------------------------------------- */
 
+	public Dictionary<NetworkPlayer, string> networkPlayers;
 
+	private NetworkGUI _networkGUI = null;
+	public NetworkGUI networkGUI {
+		get {
+			if (_networkGUI == null) {
 
-
-
-
-
-
-
-
-
+				_networkGUI = GameObject.Find ("GUIObj").GetComponent<NetworkGUI>() as NetworkGUI;
+			}
+			return _networkGUI;
+		}
+	}
 
 	// ------------------ VRUE Tasks END ----------------------------
 
@@ -85,26 +88,11 @@ public class UserManager : ScriptableObject {
  		* 	to be "player1"
  		* 	- Make an RPC-call that sends the player name to client and show it in the GUI
 		----------------------------------------------------------------- */
+		if ( networkPlayers.ContainsKey (player) ) return; // do nothing, since the player is already in the structure
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		string userString = "player" + highestAvailableUserIndex();
+		networkGUI.networkView.RPC ("receivePlayerName", player, userString);
+		networkPlayers.Add (player, userString);
 
 
 
@@ -116,16 +104,49 @@ public class UserManager : ScriptableObject {
     /// Called by UserManagementObjectController on the server whenever a player disconnected from the server.
     /// </summary>
     /// <param name="player">Disconnected player</param>
+	/// 
+	private int highestAvailableUserIndex() {
+		int highest = 1;
+		//int[] indexes = new int[networkPlayers.Count];
+		List<int> indexes = new List<int>(networkPlayers.Count);
+
+
+		if (networkPlayers.Count ==0) {
+			return 1;
+		}  
+
+		// build an array of indexes
+		int c = 0;
+		foreach (string value in networkPlayers.Values) {
+
+			int id = int.Parse(value.Substring("player".Length));
+			indexes[c] = id;
+
+			c++;
+		}
+
+		indexes.Sort();
+		// walk through the list until we find a gap
+		for (int i = 1; i < indexes.Count; i++) {
+
+			if (indexes[i] - indexes[i-1] > 1) return (indexes[i-1] + 1);
+			
+
+		}
+
+		return indexes[indexes.Count] + 1;
+
+
+	}
     public void OnPlayerDisconnected(NetworkPlayer player) 
     {
 		/* ------------------ VRUE Tasks START  -------------------
 		 * If a player disconnects remove it from our datastructure (if it is in there!)
         ----------------------------------------------------------------- */
+		if (networkPlayers.ContainsKey (player)) {
 
-
-
-
-
+			networkPlayers.Remove(player);
+		}
 
         // ------------------ VRUE Tasks END ----------------------------
     }
@@ -141,8 +162,8 @@ public class UserManager : ScriptableObject {
          * 	- Find the NetworkPlayer assigned to the playerName in your datastructure
          * 	and return it.
         ----------------------------------------------------------------- */
-
-
+		var found = networkPlayers.Where (e => e.Equals (playerName)).FirstOrDefault ();
+		return found.Key;
 
 
 

@@ -42,7 +42,7 @@ public class NetworkGUI : MonoBehaviour {
 	 * store player name
     ----------------------------------------------------------------- */
 
-
+	public string playerName = "player0";
 
     // ------------------ VRUE Tasks END ----------------------------
 
@@ -125,7 +125,11 @@ public class NetworkGUI : MonoBehaviour {
 	 *	- Add an RPC method, which has the Client's name-string
 	 *	as a parameter
 	 ----------------------------------------------------------------- */
+	[RPC]
+	void receivePlayerName(string clientNameString, NetworkMessageInfo nmi) {
+		playerName = clientNameString; 
 
+	}
 
 
 
