@@ -44,6 +44,15 @@ public class UserManager : ScriptableObject {
     ----------------------------------------------------------------- */
 
 	public Dictionary<NetworkPlayer, string> networkPlayers;
+	private List<int> _playerIndices;
+	private List<int> playerIndices {
+		get {
+			if (_playerIndices == null) {
+				_playerIndices = new List<int>();
+			}
+			return _playerIndices;
+		}
+	}
 
 	private NetworkGUI _networkGUI = null;
 	public NetworkGUI networkGUI {
@@ -90,7 +99,12 @@ public class UserManager : ScriptableObject {
 		----------------------------------------------------------------- */
 		if ( networkPlayers.ContainsKey (player) ) return; // do nothing, since the player is already in the structure
 
-		string userString = "player" + highestAvailableUserIndex();
+		int playerIndex = highestAvailableUserIndex ();
+		// add that player index to the array
+		this.playerIndices.Add (playerIndex);
+		//this.playerIndices.Sort ();
+
+		string userString = "player" + playerIndex;
 		networkGUI.networkView.RPC ("receivePlayerName", player, userString);
 		networkPlayers.Add (player, userString);
 
@@ -106,25 +120,15 @@ public class UserManager : ScriptableObject {
     /// <param name="player">Disconnected player</param>
 	/// 
 	private int highestAvailableUserIndex() {
-		int highest = 1;
+
 		//int[] indexes = new int[networkPlayers.Count];
-		List<int> indexes = new List<int>(networkPlayers.Count);
+		List<int> indexes = this.playerIndices;
 
-
-		if (networkPlayers.Count ==0) {
+		if (indexes.Count ==0) {
 			return 1;
 		}  
 
-		// build an array of indexes
-		int c = 0;
-		foreach (string value in networkPlayers.Values) {
-
-			int id = int.Parse(value.Substring("player".Length));
-			indexes[c] = id;
-
-			c++;
-		}
-
+		// sort the array of indexes
 		indexes.Sort();
 		// walk through the list until we find a gap
 		for (int i = 1; i < indexes.Count; i++) {
@@ -146,6 +150,7 @@ public class UserManager : ScriptableObject {
 		if (networkPlayers.ContainsKey (player)) {
 
 			networkPlayers.Remove(player);
+			this.playerIndices.Remove( int.Parse(networkPlayers[player].Substring("string".Length)) );
 		}
 
         // ------------------ VRUE Tasks END ----------------------------
