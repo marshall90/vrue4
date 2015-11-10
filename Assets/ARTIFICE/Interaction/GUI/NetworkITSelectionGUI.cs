@@ -49,6 +49,11 @@ public class NetworkITSelectionGUI : ITSelectionGUI
 		- set name for trigger marker
 		----------------------------------------------------------------- */
 
+		// name of interaction object in Unity Hierarchy
+		_vh = "VirtualHand(Clone)";
+		
+		// name of trigger marker
+		_triggerMarker = "Marker2";
 
 		// ------------------ VRUE Tasks END ----------------------------
 	}
