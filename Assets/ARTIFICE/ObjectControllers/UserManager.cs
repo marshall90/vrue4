@@ -157,9 +157,14 @@ public class UserManager : ScriptableObject {
 		 * If a player disconnects remove it from our datastructure (if it is in there!)
         ----------------------------------------------------------------- */
 		if (networkPlayers.ContainsKey (player)) {
-
+			 
+			string playerName = networkPlayers[player];
 			networkPlayers.Remove(player);
-			this.playerIndices.Remove( int.Parse(networkPlayers[player].Substring("string".Length)) );
+			string playerIndexString = playerName.Substring("player".Length);
+			int playerIndex = 0;
+			int.TryParse(playerIndexString, out playerIndex);
+
+			if (playerIndex > 0) this.playerIndices.Remove( playerIndex );
 		}
 
         // ------------------ VRUE Tasks END ----------------------------
