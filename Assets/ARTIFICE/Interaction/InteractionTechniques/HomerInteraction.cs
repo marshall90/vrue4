@@ -43,8 +43,7 @@ public class HomerInteraction : ObjectSelectionBase
 	private GameObject interactionOrigin = null;
 	
 	private bool multipleSelection;
-	
-	private bool lastSelected = false;
+
 	public Vector3 virtualHandPivot = Vector3.zero;
 	
 	private float distanceHand = 0f;
@@ -111,7 +110,7 @@ public class HomerInteraction : ObjectSelectionBase
 							bool remove = true;
 							for (int i = 0; i < hits.Length; i++)
 							{
-								GameObject collidee = hits[i].transform.gameObject;
+								GameObject collidee = hits[i].collider.transform.gameObject;
 								if(collidee.GetInstanceID() == col.GetInstanceID())
 								{
 									//dont remove the collidee if it exists in the collidees list and the raycast hit list
@@ -132,7 +131,7 @@ public class HomerInteraction : ObjectSelectionBase
 						for (int i = 0; i < hits.Length; i++) 
 						{
 							
-							GameObject collidee = hits[i].transform.gameObject;
+							GameObject collidee = hits[i].collider.transform.gameObject;
 							
 							if (hasObjectController(collidee))
 							{
@@ -215,7 +214,8 @@ public class HomerInteraction : ObjectSelectionBase
 				}
 				
 				// Transform (translate and rotate) selected object depending on of virtual hand's transformation
-				if (selected)
+				// also do this only if we have the permission to do so
+				if (isOwnerCallback() && selected)
 				{
 					float currentHandDistance = Vector3.Distance (tracker.transform.position, interactionOrigin.transform.position);
 					float virtualHandDistance = currentHandDistance * (distanceObject / distanceHand);
@@ -224,8 +224,7 @@ public class HomerInteraction : ObjectSelectionBase
 					
 					this.transformInter(this.transform.position, this.transform.rotation);
 				}
-				
-				lastSelected = selected;
+
 			}else 
 			{
 				// make virtual hand invisible -> physical hand is autmatically rendert due to tracking state
