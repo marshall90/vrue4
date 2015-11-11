@@ -108,6 +108,8 @@ public class UserManager : ScriptableObject {
 		----------------------------------------------------------------- */
 		if ( networkPlayers.ContainsKey (player) ) return; // do nothing, since the player is already in the structure
 
+		Debug.Log ("###### Add new User");
+
 		int playerIndex = highestAvailableUserIndex ();
 		// add that player index to the array
 		this.playerIndices.Add (playerIndex);
@@ -117,7 +119,7 @@ public class UserManager : ScriptableObject {
 		networkGUI.networkView.RPC ("receivePlayerName", player, userString);
 		networkPlayers.Add (player, userString);
 
-
+		Debug.Log ("###### Name: "+userString);
 
 
         // ------------------ VRUE Tasks END ----------------------------
@@ -158,8 +160,9 @@ public class UserManager : ScriptableObject {
         ----------------------------------------------------------------- */
 		if (networkPlayers.ContainsKey (player)) {
 
-			networkPlayers.Remove(player);
 			this.playerIndices.Remove( int.Parse(networkPlayers[player].Substring("string".Length)) );
+			networkPlayers.Remove(player);
+
 		}
 
         // ------------------ VRUE Tasks END ----------------------------
@@ -176,8 +179,22 @@ public class UserManager : ScriptableObject {
          * 	- Find the NetworkPlayer assigned to the playerName in your datastructure
          * 	and return it.
         ----------------------------------------------------------------- */
-		var found = networkPlayers.Where (e => e.Equals (playerName)).FirstOrDefault ();
-		return found.Key;
+		//var found = networkPlayers.Where (e => e.Equals (playerName)).FirstOrDefault ();
+		NetworkPlayer found = nonExistingPlayer;
+
+		foreach(KeyValuePair<NetworkPlayer, string> entry in networkPlayers)
+		{
+			// do something with entry.Value or entry.Key
+			if(entry.Value.Equals(playerName))
+			{
+				found = entry.Key;
+				break;
+			}
+		}
+
+
+		//Debug.Log ("------ " + networkPlayers[found]);
+		return found;
 
 
 
