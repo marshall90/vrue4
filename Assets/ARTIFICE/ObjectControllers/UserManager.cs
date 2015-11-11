@@ -43,7 +43,16 @@ public class UserManager : ScriptableObject {
 	 * 	- Add a data-structure, that can help you map the NetworkPlayers to name-strings
     ----------------------------------------------------------------- */
 
-	public Dictionary<NetworkPlayer, string> networkPlayers;
+	private Dictionary<NetworkPlayer, string> _networkPlayers;
+	public Dictionary<NetworkPlayer, string> networkPlayers {
+		get {
+			if (_networkPlayers == null) {
+				_networkPlayers = new Dictionary<NetworkPlayer, string>();
+			}
+			return _networkPlayers;
+		}
+
+	}
 	private List<int> _playerIndices;
 	private List<int> playerIndices {
 		get {
