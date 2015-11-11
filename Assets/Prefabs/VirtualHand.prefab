@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab08c4b827d6c57418d94d695423bb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualHandPivot: {x: 0, y: 0, z: 0}
+  selected2: 0
 --- !u!1002 &11400003
 EditorExtensionImpl:
   serializedVersion: 6
@@ -209,7 +211,7 @@ NetworkView:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 11400000}
+  m_Observed: {fileID: 11400006}
   m_ViewID:
     m_ID: 0
     m_Type: 0
