@@ -715,9 +715,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6e1b976988fba64699533d3768da49b, type: 3}
+  m_Script: {fileID: 11500000, guid: 710b83c397387f44aaef37a1aa7b1049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accessGrantedName: player1
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
