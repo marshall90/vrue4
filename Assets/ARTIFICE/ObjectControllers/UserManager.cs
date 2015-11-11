@@ -147,7 +147,7 @@ public class UserManager : ScriptableObject {
 
 		}
 
-		return indexes[indexes.Count] + 1;
+		return indexes[indexes.Count - 1] + 1;
 
 
 	}

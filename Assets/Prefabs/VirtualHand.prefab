@@ -35,6 +35,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 65: {fileID: 6500002}
   - 54: {fileID: 5400000}
+  - 114: {fileID: 11449160}
   m_Layer: 2
   m_Name: VirtualHand
   m_TagString: Untagged
@@ -195,7 +196,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 244652b94477e8444aff9c6d74aa77d7, type: 3}
   m_Name: 
@@ -203,6 +204,18 @@ MonoBehaviour:
 --- !u!1002 &11400007
 EditorExtensionImpl:
   serializedVersion: 6
+--- !u!114 &11449160
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1505542c9f5761843ae00bbccdedbf65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed_trans: .100000001
 --- !u!148 &14800000
 NetworkView:
   m_ObjectHideFlags: 1
