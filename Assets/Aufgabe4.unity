@@ -6621,8 +6621,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecaf69e97c4480f43bdc66d3ca87c377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionCamera: {x: 0, y: 0, z: -1}
-  size: {x: 1, y: 1}
+  positionCamera: {x: -.00071599998, y: -.0194809996, z: -1}
+  size: {x: .912229002, y: .683070004}
   renderInBack: 0
   normalizedViewPortRect:
     serializedVersion: 2
