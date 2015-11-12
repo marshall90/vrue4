@@ -181,16 +181,20 @@ public class UserManager : ScriptableObject {
          * 	- Find the NetworkPlayer assigned to the playerName in your datastructure
          * 	and return it.
         ----------------------------------------------------------------- */
-		var found = networkPlayers.Where (e => e.Equals (playerName)).FirstOrDefault ();
-		return found.Key;
+		//var found = networkPlayers.Where (e => e.Equals (playerName)).FirstOrDefault ();
+		NetworkPlayer found = nonExistingPlayer;
 
-
-
-
-
-
-
-
+		foreach(KeyValuePair<NetworkPlayer, string> entry in networkPlayers)
+		{
+		// do something with entry.Value or entry.Key
+			if(entry.Value.Equals(playerName))
+			{
+				found = entry.Key;
+				break;
+			}
+		}
+		//Debug.Log ("------ " + networkPlayers[found]);
+		return found;
         // ------------------ VRUE Tasks END ----------------------------
 		
         return nonExistingPlayer;
